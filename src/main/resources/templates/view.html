@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <h4 class="lead ">Your shopping cart contains <span th:text="${cartSize}"></span> items.</h4>
+            <br>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <a th:href="@{/cart/clear}" class="btn btn-link text-dark bg-warning">clear cart</a>
+            <a th:href="@{/}" class="btn btn-link text-dark bg-warning ml-5">continue shopping</a>
+            <a href="#" class="btn btn-link text-dark bg-warning ml-5">proceed to checkout</a>
+            <br>
+            <br>
+        </div>
+        <div class="row">
+            <h4 class="lead ml-auto">subtotal : €<span th:text="${#numbers.formatDecimal(subTotal,0,2)}"></span></h4>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form th:action="@{/cart/update}" th:object="${cartItem}" method="post">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>product</th>
+                            <th>name</th>
+                            <th>price</th>
+                            <th>quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="it : ${cartItems}">
+                            <td><img src="../static/images/products" th:src="@{'/images/products/'+${it.name}+'.png'}"
+                                     alt="">
+                            </td>
+                            <td th:text="${it.name}"></td>
+                            <td>€ <span th:text="${it.price * it.quantity}"></span><br>
+                                ( €
+                                <small th:text="${it.price}"></small>/unit)
+                            </td>
+                            <td th:if="${it.render}">
+                                <input style="width: 40px" type="number" min="1" th:field="*{qList}">
+                               <!-- <a th:href="@{/cart/update2}" class="btn btn-secondary text-dark rounded">save</a>-->
+                                <input type="submit" class="btn btn-outline-info" value="save">
+                            </td>
+                            <td th:if="${!it.render}">
+                                <span th:text="${it.quantity}"></span>
+                                <a th:href="@{/cart/update2}" class="btn text-dark rounded">update</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -10,8 +10,18 @@
 <body>
 <section>
     <head>
-        <div class="container">
-            <img id="logo" src="../../static/images/logo.png" th:src="@{/images/logo.png}" alt="images">
+        <div class="container mt-2">
+            <div class="cart col-md-3">
+                <a th:href="@{/view-cart}" th:if="${show}">
+                <img class="mt-2" src="../../static/images/cart.gif" th:src="@{/images/cart.gif}" alt="cart">&nbsp;
+                <span class="badge badge-secondary" th:text="${cartSize}"></span>
+                </a>
+            </div>
+            <div class="col-md-1">
+            <a th:href="@{/home}">
+                <img id="logo" src="../../static/images/logo.png" th:src="@{/images/logo.png}" alt="images"/>
+            </a>
+            </div>
             <img id="logoText" src="../../static/images/logoText.png" th:src="@{/images/logoText.png}" alt="images">
             <img id="stalk" src="../../static/images/stalk.png" th:src="@{/images/stalk.png}" alt="images">
         </div>
