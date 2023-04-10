@@ -17,7 +17,7 @@
                 <span class="badge badge-secondary" th:text="${cartSize}"></span>
                 </a>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 ">
             <a th:href="@{/home}">
                 <img id="logo" src="../../static/images/logo.png" th:src="@{/images/logo.png}" alt="images"/>
             </a>
@@ -30,5 +30,6 @@
 <section>
     <div th:replace="${main}"></div>
 </section>
+<div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

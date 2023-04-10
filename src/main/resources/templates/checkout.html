@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main role="main">
+    <div th:if="${show2}" class="container">
+        <div class="row">
+            <div class="col">
+                <h3 class="font-weight-bold">checkout</h3>
+                <br>
+                <p>In order to purchase items in your shopping cart, please provide us with the following
+                    information:</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7 mt-5 body">
+                <br>
+                <form th:action="@{/add-info}" th:object="${user}" method="post">
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body ">name :</span>
+                        <input type="text" class="form-control csIn" th:field="*{name}">
+                    </div>
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body">email :</span>
+                        <input type="text" class="form-control csIn" th:field="*{email}">
+                    </div>
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body">phone :</span>
+                        <input type="text" class="form-control csIn" th:field="*{phone}">
+                    </div>
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body">address:</span>
+                        <input type="text" class="form-control csIn" th:field="*{address}">
+                    </div>
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body">prague :</span>
+                        <input type="number" class="form-control" min="1"
+                               th:field="*{prague}" style="max-width: 50px">
+                    </div>
+                    <div class="form-group input-group-prepend">
+                        <span class="input-group-text body">credit card number :</span>
+                        <input type="text" class="form-control csIn" th:field="*{cardNumber}">
+                    </div>
+                    <div class="csBtn" style="margin-left: 500px;">
+                        <input type="submit" class="btn" value="submit purchase">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 ml-auto mt-3">
+                <br>
+                <ul>
+                    <li><h4 class="lead mt-5">Next-day delivery is guaranteed</h4></li>
+                    <li><h4 class="lead mt-1">5% of subTotal is
+                        applied as delivery surcharge to all purchase orders</h4></li>
+                </ul>
+                <br>
+                <div class="csDiv">
+                    <br>
+                    <p style="margin-left:200px;"><b>subtotal : </b>€
+                        <span th:text="${#numbers.formatDecimal(subTotal,0,2)}"></span>
+                    </p>
+                    <p style="margin-left: 120px;"><b>delivery surcharge : </b>€
+                        <span style="margin-left: 13px;" th:text="${#numbers.formatDecimal(deliCharge,0,2)}"></span>
+                    </p>
+                    <hr>
+                    <p style="margin-left: 225px;"><b>total : </b>€ <span
+                            th:text="${#numbers.formatDecimal(total,0,2)}"></span></p>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" th:if="${voucher}">
+        <div class="row">
+            <div class="bg-warning" style="border-radius: 10px">
+                <br>
+                <h3 class="mr-3 ml-3">Your order has been successfully processed and will be delivered within 24
+                    hours.</h3>
+                <br>
+                <p class="mr-3 ml-3">Please keep a note of your confirmation number: <span></span><br>
+                    If you have a query concerning your data, feel free to <a href="#">contact us</a>.
+                    <br>
+                    Thank you for shopping at the Affable Bean Green Grocer!
+                </p>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-striped">
+                    <h3><b>order summary</b></h3>
+                    <thead>
+                    <tr>
+                        <th>product</th>
+                        <th>quantity</th>
+                        <th>price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" item : ${bItem}">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td>€ <span th:text="${item.price}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <p style="margin-left: 330px;"><b>delivery surcharge: </b>€
+                    <span th:text="${#numbers.formatDecimal(deliCharge,0,2)}"></span>
+                </p>
+                <br>
+                <p style="margin-left: 430px;"><b>total: </b>€<span
+                        th:text="${#numbers.formatDecimal(total,0,2)}"></span></p>
+                <hr>
+                <p>date processed: <span th:text="${date}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><b>delivery address</b></h3>
+                    </div>
+                    <div class="card-body">
+                        <span th:text="${cus.name}"></span>
+                        <br>
+                        <span th:text="${cus.address}"></span>
+                        <br>
+                        <span th:text="${cus.prague}"></span>
+                        <br><hr>
+                        <p><b>email:</b> <span th:text="${cus.email}"></span></p>
+                        <br>
+                        <p><b>phone:</b> <span th:text="${cus.phone}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,15 +1,18 @@
 package com.example.simpleeffable.controller;
 
 import com.example.simpleeffable.ds.CartItem;
+import com.example.simpleeffable.entity.Customer;
 import com.example.simpleeffable.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,10 +59,23 @@ public class ProductController {
         model.addAttribute("cartItems", productService.getCartItems());
         return "view";
     }
+    double price;
+    double deliCharge;
     @ModelAttribute("subTotal")
     public double subTotal(){
-        return productService.getCartItems().stream().mapToDouble( i -> i.getPrice() * i.getQuantity()).sum();
+        price =  productService.getCartItems().stream().mapToDouble( i -> i.getPrice() * i.getQuantity()).sum();
+        return price;
     }
+    @ModelAttribute("deliCharge")
+    public double deliCharge(){
+        deliCharge = price * 0.05;
+        return deliCharge;
+    }
+    @ModelAttribute("total")
+    public double total(){
+        return price + deliCharge;
+    }
+
     @PostMapping("/cart/update")
     public String update(CartItem cartItem,Model model){
         model.addAttribute("cartItems", productService.getCartItems());
@@ -89,4 +105,32 @@ public class ProductController {
         return changeButton;
     }
 
+    @GetMapping("/add-info")
+    public String addInfo(Model model){
+        model.addAttribute("user",new Customer());
+        model.addAttribute("show2",true);
+        return "checkout";
+    }
+    @PostMapping("/add-info")
+    public String saveInfo(Customer customer, BindingResult result, Model model){
+        if (result.hasErrors()){
+            return "checkout";
+        }
+        model.addAttribute("check",true);
+        productService.saveInfo(customer);
+        return "redirect:/show-info?id=" + customer.getId();
+    }
+    @ModelAttribute("date")
+    public LocalDateTime dateTime(){
+        return LocalDateTime.now();
+    }
+    @GetMapping("/show-info")
+    public String showInfo(@RequestParam("id")int id, Model model){
+        model.addAttribute("show",true);
+        model.addAttribute("user",productService.listUser());
+        model.addAttribute("bItem",productService.getCartItems());
+        model.addAttribute("cus",productService.searchById(id));
+        model.addAttribute("voucher",true);
+        return "checkout";
+    }
 }

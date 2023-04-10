@@ -18,13 +18,27 @@ public class Product {
 
     @Column(length = 45)
     private String name;
+
+    @Column(columnDefinition = "decimal(5,2)")
     private double price;
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
-    @JoinColumn(name = "category_id")
     @ManyToOne
+    @JoinColumn(name = "category_id",referencedColumnName = "id"/*, foreignKey = @ForeignKey(name = "fk_product_category")*/)
+//    @ForeignKey(name = "fk_product_category")
     private Category category;
+
+    public Product() {
+    }
+
+    public Product(String name, double price, String description, LocalDateTime lastUpdate, Category category) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.lastUpdate = lastUpdate;
+        this.category = category;
+    }
 }

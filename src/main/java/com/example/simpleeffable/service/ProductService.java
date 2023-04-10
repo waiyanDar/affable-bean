@@ -2,9 +2,12 @@ package com.example.simpleeffable.service;
 
 import com.example.simpleeffable.dao.CategoryDao;
 import com.example.simpleeffable.dao.ProductDao;
+import com.example.simpleeffable.dao.CustomerDao;
 import com.example.simpleeffable.ds.Cart;
 import com.example.simpleeffable.ds.CartItem;
+import com.example.simpleeffable.entity.Category;
 import com.example.simpleeffable.entity.Product;
+import com.example.simpleeffable.entity.Customer;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +22,18 @@ public class ProductService {
     private CategoryDao categoryDao;
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private CustomerDao customerDao;
 
     @Autowired
     private Cart cart;
+
+    public void saveCategory(Category category){
+        categoryDao.save(category);
+    }
+    public void saveProduct(Product product){
+        productDao.save(product);
+    }
 
     public List<Product> listProducts(int categoryId) {
         return productDao.findProductByCategoryId(categoryId);
@@ -47,5 +59,14 @@ public class ProductService {
     }
     public Set<CartItem> getCartItems (){
         return cart.getCartItems();
+    }
+    public void saveInfo(Customer customer){
+        customerDao.save(customer);
+    }
+    public List<Customer> listUser (){
+        return customerDao.findAll();
+    }
+    public Customer searchById(int id){
+        return customerDao.findById(id).get();
     }
 }
