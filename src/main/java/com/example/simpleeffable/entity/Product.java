@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,14 +23,15 @@ public class Product {
 
     @Column(columnDefinition = "decimal(5,2)")
     private double price;
+
+    @Column(columnDefinition = "TINYTEXT")
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id",referencedColumnName = "id"/*, foreignKey = @ForeignKey(name = "fk_product_category")*/)
-//    @ForeignKey(name = "fk_product_category")
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
     private Category category;
 
     public Product() {

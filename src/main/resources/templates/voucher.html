@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html th:replace="layout/mainLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="bg-warning" style="border-radius: 10px">
+                <br>
+                <h3 class="mr-3 ml-3">Your order has been successfully processed and will be delivered within 24
+                    hours.</h3>
+                <br>
+                <p class="mr-3 ml-3">Please keep a note of your confirmation number: <b><span th:text="${cus.voucherNo}"></span></b>
+                    <br>
+                    If you have a query concerning your data, feel free to <a href="#">contact us</a>.
+                    <br>
+                    Thank you for shopping at the Affable Bean Green Grocer!
+                </p>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-striped">
+                    <h3><b>order summary</b></h3>
+                    <thead>
+                    <tr>
+                        <th style="min-width: 150px">product</th>
+                        <th>quantity</th>
+                        <th>price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" item : ${bItem}">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td>€ <span th:text="${#numbers.formatDecimal((item.quantity * item.price),0,2)}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <p th:if="${total2 > 9}" style="margin-left: 360px;"><b>delivery surcharge: </b>€
+                    <span style="margin-left: 13px;"  th:text="${#numbers.formatDecimal(deli,0,2)}"></span>
+                </p>
+                <p th:if="${total2 < 10}" style="margin-left: 360px;"><b>delivery surcharge: </b>€
+                    <span style="margin-left: 10px;"  th:text="${#numbers.formatDecimal(deli,0,2)}"></span>
+                </p>
+                <p style="margin-left: 464px;"><b>total: </b>€ <span
+                        th:text="${#numbers.formatDecimal(total2,0,2)}"></span></p>
+                <hr>
+                <p>date processed: <span th:text="${date}"></span></p>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><b>delivery address</b></h3>
+                    </div>
+                    <div class="card-body">
+                        <span th:text="${cus.name}"></span>
+                        <br>
+                        <span th:text="${cus.address}"></span>
+                        <br>
+                        <p>Prague <span th:text="${cus.prague}"></span></p>
+                        <hr>
+                        <p><b>email:</b> <span th:text="${cus.email}"></span></p>
+                        <p><b>phone:</b> <span th:text="${cus.phone}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

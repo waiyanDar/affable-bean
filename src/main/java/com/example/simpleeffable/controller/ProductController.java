@@ -3,6 +3,7 @@ package com.example.simpleeffable.controller;
 import com.example.simpleeffable.ds.CartItem;
 import com.example.simpleeffable.entity.Customer;
 import com.example.simpleeffable.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -24,13 +26,14 @@ public class ProductController {
 
     private boolean changeButton;
     @GetMapping({"/", "/home"})
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("show",false);
         return "home";
     }
 
     @GetMapping("/products")
     public String listProductsByCategory(@RequestParam("cid") int cid, Model model) {
-        model.addAttribute("show", true);
+//        model.addAttribute("show", true);
         model.addAttribute("products", productService.listProducts(cid));
         return "products";
     }
@@ -49,18 +52,23 @@ public class ProductController {
 
     @ModelAttribute("cartSize")
     public int cartSize() {
-        return productService.cartSize();
+        return productService.getCartItems().stream().mapToInt( i -> i.getQuantity()).sum();
     }
 
     @GetMapping("/view-cart")
     public String checkOut(Model model) {
-        model.addAttribute("show",true);
+//        model.addAttribute("show",true);
         model.addAttribute("cartItem", new CartItem());
         model.addAttribute("cartItems", productService.getCartItems());
         return "view";
     }
     double price;
     double deliCharge;
+
+    @ModelAttribute("show")
+    public boolean show(){
+        return true;
+    }
     @ModelAttribute("subTotal")
     public double subTotal(){
         price =  productService.getCartItems().stream().mapToDouble( i -> i.getPrice() * i.getQuantity()).sum();
@@ -106,18 +114,31 @@ public class ProductController {
     }
 
     @GetMapping("/add-info")
-    public String addInfo(Model model){
+    public String addInfo( RedirectAttributes attributes,Model model){
+        if (cartSize()==0){
+            attributes.addFlashAttribute("null",true);
+            return "redirect:/view-cart";
+        }
+
         model.addAttribute("user",new Customer());
-        model.addAttribute("show2",true);
+//        model.addAttribute("show",true);
+
         return "checkout";
     }
     @PostMapping("/add-info")
-    public String saveInfo(Customer customer, BindingResult result, Model model){
+    public String saveInfo( Customer customer, BindingResult result, Model model){
         if (result.hasErrors()){
             return "checkout";
         }
-        model.addAttribute("check",true);
+
+        for (CartItem cartItem : productService.getCartItems()){
+            cartItem.getCustomers().add(customer);
+            customer.getCartItems().add(cartItem);
+            productService.saveCartItem(cartItem);
+        }
         productService.saveInfo(customer);
+
+        productService.cartClear();
         return "redirect:/show-info?id=" + customer.getId();
     }
     @ModelAttribute("date")
@@ -126,11 +147,18 @@ public class ProductController {
     }
     @GetMapping("/show-info")
     public String showInfo(@RequestParam("id")int id, Model model){
-        model.addAttribute("show",true);
+
+//        model.addAttribute("show",true);
         model.addAttribute("user",productService.listUser());
-        model.addAttribute("bItem",productService.getCartItems());
+        model.addAttribute("bItem",productService.findProduct(id));
         model.addAttribute("cus",productService.searchById(id));
-        model.addAttribute("voucher",true);
-        return "checkout";
+
+        var p1 = productService.findProduct(id);
+        double subTotal= p1.stream().mapToDouble( p -> p.getPrice()* p.getQuantity()).sum();
+        double deli = subTotal * 0.05;
+        double total = deli + subTotal;
+        model.addAttribute("deli",deli);
+        model.addAttribute("total2",total);
+        return "voucher";
     }
 }

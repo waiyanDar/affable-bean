@@ -1,5 +1,6 @@
 package com.example.simpleeffable.service;
 
+import com.example.simpleeffable.dao.CartItemDao;
 import com.example.simpleeffable.dao.CategoryDao;
 import com.example.simpleeffable.dao.ProductDao;
 import com.example.simpleeffable.dao.CustomerDao;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,11 @@ public class ProductService {
     private ProductDao productDao;
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private CartItemDao cartItemDao;
 
+    private Customer customer;
+    private CartItem cartItem;
     @Autowired
     private Cart cart;
 
@@ -61,6 +67,11 @@ public class ProductService {
         return cart.getCartItems();
     }
     public void saveInfo(Customer customer){
+        Random random = new Random();
+        int min = 100000000;
+        int max = 999999999;
+        int voucherNo = random.nextInt(max - min + 1) + min;
+        customer.setVoucherNo(voucherNo);
         customerDao.save(customer);
     }
     public List<Customer> listUser (){
@@ -68,5 +79,12 @@ public class ProductService {
     }
     public Customer searchById(int id){
         return customerDao.findById(id).get();
+    }
+    public void saveCartItem(CartItem cartItem){
+        cartItemDao.save(cartItem);
+    }
+
+    public List<CartItem> findProduct(int id){
+        return cartItemDao.findCartItemsByCustomerId(id);
     }
 }
