@@ -4,9 +4,6 @@
 <main role="main">
     <div class="container">
         <div class="row">
-            <div th:if="${null}" class="alert alert-danger" role="alert">
-                <span>Cart is empty</span>
-            </div>
             <h4 class="lead ">Your shopping cart contains <span th:text="${cartSize}"></span> items.</h4>
             <br>
         </div>
@@ -33,6 +30,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <div th:if="${well}" class="alert alert-danger" role="alert">
+                        <span>Cart is empty</span>
+                    </div>
                     <form th:action="@{/cart/update}" th:object="${cartItem}" method="post">
                         <tr th:each="it : ${cartItems}">
                             <td><img src="../static/images/products" th:src="@{'/images/products/'+${it.name}+'.png'}"

@@ -2,10 +2,7 @@ package com.example.simpleeffable.entity;
 
 import com.example.simpleeffable.ds.CartItem;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,11 +32,12 @@ public class Customer {
     @Column(name = "card_number")
     private String cardNumber;
 
-    @Min(100000000)
-    @Max(999999999)
+    @Min(value = 100000000)
+    @Max(value = 999999999)
     @Column(name = "voucher_no",unique = true)
     private int voucherNo;
 
+    @Min(value = 1,message = "prague can't be less than 0")
     private String prague;
 
     @ManyToMany

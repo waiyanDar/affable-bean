@@ -39,7 +39,7 @@
                     </tbody>
                 </table>
                 <hr>
-                <p th:if="${total2 > 9}" style="margin-left: 360px;"><b>delivery surcharge: </b>€
+                <p th:if="${total2 > 10}" style="margin-left: 360px;"><b>delivery surcharge: </b>€
                     <span style="margin-left: 13px;"  th:text="${#numbers.formatDecimal(deli,0,2)}"></span>
                 </p>
                 <p th:if="${total2 < 10}" style="margin-left: 360px;"><b>delivery surcharge: </b>€

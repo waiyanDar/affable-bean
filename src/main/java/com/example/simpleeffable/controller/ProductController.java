@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,8 +46,9 @@ public class ProductController {
     }
 
     @GetMapping("/cart/clear")
-    public String clear() {
+    public String clear(RedirectAttributes attributes) {
         productService.cartClear();
+        attributes.addFlashAttribute("empty",true);
         return "redirect:/view-cart";
     }
 
@@ -57,7 +59,7 @@ public class ProductController {
 
     @GetMapping("/view-cart")
     public String checkOut(Model model) {
-//        model.addAttribute("show",true);
+        model.addAttribute("well",model.containsAttribute("empty"));
         model.addAttribute("cartItem", new CartItem());
         model.addAttribute("cartItems", productService.getCartItems());
         return "view";
@@ -116,17 +118,15 @@ public class ProductController {
     @GetMapping("/add-info")
     public String addInfo( RedirectAttributes attributes,Model model){
         if (cartSize()==0){
-            attributes.addFlashAttribute("null",true);
+            attributes.addFlashAttribute("empty",true);
             return "redirect:/view-cart";
         }
 
         model.addAttribute("user",new Customer());
-//        model.addAttribute("show",true);
-
         return "checkout";
     }
     @PostMapping("/add-info")
-    public String saveInfo( Customer customer, BindingResult result, Model model){
+    public String saveInfo(@Valid Customer customer, BindingResult result, Model model){
         if (result.hasErrors()){
             return "checkout";
         }
@@ -142,8 +142,9 @@ public class ProductController {
         return "redirect:/show-info?id=" + customer.getId();
     }
     @ModelAttribute("date")
-    public LocalDateTime dateTime(){
-        return LocalDateTime.now();
+    public String dateTime(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");
+        return LocalDateTime.now().format(formatter);
     }
     @GetMapping("/show-info")
     public String showInfo(@RequestParam("id")int id, Model model){

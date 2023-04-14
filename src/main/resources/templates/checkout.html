@@ -16,40 +16,40 @@
                 <br>
                 <form  th:object="${user}"  th:action="@{/add-info}"method="post">
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body ">name :</span>
-                        <input type="text" class="form-control csIn"
+                        <label class="input-group-text body" for="name">name :</label>
+                        <input type="text" class="form-control csIn" id="name"
                                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}">
                         <small th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:errors="*{name}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body">email :</span>
-                        <input type="text" class="form-control csIn"
+                        <label class="input-group-text body" for="email">email :</label>
+                        <input type="text" class="form-control csIn" id="email"
                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}">
-                        <small th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:field="*{email}"></small>
+                        <small th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:errors="*{email}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body">phone :</span>
-                        <input type="text" class="form-control csIn"
+                        <label class="input-group-text body" for="phone">phone :</label>
+                        <input type="text" class="form-control csIn" id="phone"
                                th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" th:field="*{phone}">
-                        <small th:if="${#fields.hasErrors('phone')}" class="invalid-feedback" th:field="*{phone}"></small>
+                        <small th:if="${#fields.hasErrors('phone')}" class="invalid-feedback" th:errors="*{phone}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body">address:</span>
-                        <input type="text" class="form-control csIn"
+                        <label class="input-group-text body" for="address">address:</label>
+                        <input type="text" class="form-control csIn" id="address"
                                th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" th:field="*{address}">
-                        <small th:if="${#fields.hasErrors('address')}" class="invalid-feedback" th:field="*{address}"></small>
+                        <small th:if="${#fields.hasErrors('address')}" class="invalid-feedback" th:errors="*{address}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body">prague :</span>
-                        <input type="number" class="form-control" min="1"  style="max-width: 50px"
+                        <label class="input-group-text body" for="prague">prague :</label>
+                        <input type="number" class="form-control" min="1"  style="max-width: 50px" id="prague"
                                th:classappend="${#fields.hasErrors('prague')} ? 'is-invalid'" th:field="*{prague}">
-                        <small th:if="${#fields.hasErrors('prague')}" class="invalid-feedback" th:field="*{prague}"></small>
+                        <small th:if="${#fields.hasErrors('prague')}" class="invalid-feedback" th:errors="*{prague}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <span class="input-group-text body">credit card number :</span>
-                        <input type="text" class="form-control csIn"
+                        <label class="input-group-text body" for="ccn">credit card number :</label>
+                        <input type="text" class="form-control csIn" id="ccn"
                                th:classappend="${#fields.hasErrors('cardNumber')} ? 'is-invalid'" th:field="*{cardNumber}">
-                        <small th:if="${#fields.hasErrors('cardNumber')}" class="invalid-feedback" th:field="*{cardNumber}"></small>
+                        <small th:if="${#fields.hasErrors('cardNumber')}" class="invalid-feedback" th:errors="*{cardNumber}"></small>
                     </div>
                     <div class="csBtn" style="margin-left: 500px;">
                         <input type="submit" class="btn" value="submit purchase">
