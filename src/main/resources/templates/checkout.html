@@ -50,8 +50,8 @@
                                th:classappend="${#fields.hasErrors('cardNumber')} ? 'is-invalid'" th:field="*{cardNumber}">
                         <small th:if="${#fields.hasErrors('cardNumber')}" class="invalid-feedback" th:errors="*{cardNumber}"></small>
                     </div>
-                    <div class="csBtn" style="margin-left: 500px;">
-                        <input type="submit" class="btn" value="submit purchase">
+                    <div class="csBtn" style="margin-left: 480px;">
+                        <input type="submit" class="btn" th:value="#{c.b1}">
                     </div>
                     <br>
                 </form>

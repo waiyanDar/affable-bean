@@ -5,9 +5,9 @@
     <div class="container">
         <div class="row">
             <h4 class="lead " th:text="#{v.p1}"></h4>&nbsp;
-            <span th:text="${cartSize}"></span> &nbsp;
-            <h4 th:if="${cartSize < 2}" th:text="#{v.p2}"></h4>
-            <h4 th:if="${cartSize >= 2}" th:text="#{v.p3}"></h4>
+            <span class="lead" th:text="${cartSize}"></span> &nbsp;
+            <h4 class="lead" th:if="${cartSize < 2}" th:text="#{v.p2}"></h4>
+            <h4 class="lead" th:if="${cartSize >= 2}" th:text="#{v.p3}"></h4>
             <br>
         </div>
         <div class="row justify-content-center align-items-center">
@@ -53,7 +53,7 @@
                             </td>
                             <td th:if="${it.render}">
                                 <input style="width: 40px" type="number" min="1" th:field="*{qList}">&nbsp;
-                                <input type="submit" class="btn csBtn" value="save">
+                                <input type="submit" class="btn csBtn" th:value="#{v.b1}">
                             </td>
                         </tr>
                     </form>

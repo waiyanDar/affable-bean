@@ -1,11 +1,9 @@
 package com.example.simpleeffable.service;
 
-import com.example.simpleeffable.dao.CartItemDao;
-import com.example.simpleeffable.dao.CategoryDao;
-import com.example.simpleeffable.dao.ProductDao;
-import com.example.simpleeffable.dao.CustomerDao;
+import com.example.simpleeffable.dao.*;
 import com.example.simpleeffable.ds.Cart;
 import com.example.simpleeffable.ds.CartItem;
+import com.example.simpleeffable.entity.CartItemQuantity;
 import com.example.simpleeffable.entity.Category;
 import com.example.simpleeffable.entity.Product;
 import com.example.simpleeffable.entity.Customer;
@@ -16,9 +14,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
+
+    @Autowired
+    private CartItemQuantityDao cartItemQuantityDao;
 
     @Autowired
     private CategoryDao categoryDao;
@@ -72,6 +74,13 @@ public class ProductService {
         int max = 999999999;
         int voucherNo = random.nextInt(max - min + 1) + min;
         customer.setVoucherNo(voucherNo);
+
+       /* CartItemQuantity quantity = new CartItemQuantity();
+        quantity.setCustomer(customer);
+        quantity.setCartItem(getCartItems().stream().collect(Collectors.toList()));
+        quantity.setQuantity(((CartItem) customer.getCartItems()).getQuantity());
+        cartItemQuantityDao.save(quantity);
+        customer.getCartItemQuantities().add(quantity);*/
         customerDao.save(customer);
     }
     public List<Customer> listUser (){

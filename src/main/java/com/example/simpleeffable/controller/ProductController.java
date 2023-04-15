@@ -162,4 +162,5 @@ public class ProductController {
         model.addAttribute("total2",total);
         return "voucher";
     }
+
 }

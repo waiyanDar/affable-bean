@@ -46,6 +46,9 @@ public class Customer {
             foreignKey = @ForeignKey(name = "FK_customer_product"))
     private List<CartItem> cartItems = new ArrayList<>();
 
+    @OneToMany(mappedBy = "customer")
+    private List<CartItemQuantity> cartItemQuantities = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -60,5 +63,10 @@ public class Customer {
 
     public void addCartItem(CartItem cartItem){
         cartItems.add(cartItem);
+    }
+
+    public void addQuantity(CartItemQuantity cartItemQuantity){
+        cartItemQuantity.setCustomer(this);
+        cartItemQuantities.add(cartItemQuantity);
     }
 }
