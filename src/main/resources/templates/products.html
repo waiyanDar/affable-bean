@@ -6,20 +6,20 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="d-flex flex-column text-center text-capitalize">
-                    <a th:href="@{'/products?cid=1'}" class=" bg-button my-3">dairy</a>
-                    <a th:href="@{'/products?cid=2'}" class=" bg-button my-3">meats</a>
-                    <a th:href="@{'/products?cid=3'}" class=" bg-button my-3">bakery</a>
-                    <a th:href="@{'/products?cid=4'}" class=" bg-button my-3">fruit &amp; veg</a>
+                    <a th:href="@{'/products?cid=1'}" class=" bg-button my-3" th:text="#{p.c1}"></a>
+                    <a th:href="@{'/products?cid=2'}" class=" bg-button my-3" th:text="#{p.c2}"></a>
+                    <a th:href="@{'/products?cid=3'}" class=" bg-button my-3" th:text="#{p.c3}"></a>
+                    <a th:href="@{'/products?cid=4'}" class=" bg-button my-3" th:text="#{p.c4}"></a>
                 </div>
             </div>
             <div class="col-md-6">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Action</th>
+                        <th th:text="#{t1.th1}"></th>
+                        <th th:text="#{t1.th2}"></th>
+                        <th th:text="#{t1.th3}"></th>
+                        <th th:text="#{t1.th4}"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                         <td th:text="${p.price+'$'}"></td>
                         <td>
                             <a class="text-capitalize text-dark"
-                               th:href="@{'/cart/purchase?id='+${p.id}+'&cid='+${p.category.id}}">Purchase</a>
+                               th:href="@{'/cart/purchase?id='+${p.id}+'&cid='+${p.category.id}}" th:text="#{t1.action}"></a>
                         </td>
                     </tr>
                     </tbody>

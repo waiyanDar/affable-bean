@@ -126,7 +126,7 @@ public class ProductController {
         return "checkout";
     }
     @PostMapping("/add-info")
-    public String saveInfo(@Valid Customer customer, BindingResult result, Model model){
+    public String saveInfo( Customer customer, BindingResult result, Model model){
         if (result.hasErrors()){
             return "checkout";
         }

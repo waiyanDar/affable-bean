@@ -5,10 +5,9 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 class="font-weight-bold">checkout</h3>
+                <h3 class="font-weight-bold" th:text="#{c.p1}"></h3>
                 <br>
-                <p>In order to purchase items in your shopping cart, please provide us with the following
-                    information:</p>
+                <p th:text="#{c.p2}"></p>
             </div>
         </div>
         <div class="row">
@@ -16,37 +15,37 @@
                 <br>
                 <form  th:object="${user}"  th:action="@{/add-info}"method="post">
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="name">name :</label>
+                        <label class="input-group-text body" for="name" th:text="#{c.t.th1}"></label>
                         <input type="text" class="form-control csIn" id="name"
                                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}">
                         <small th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:errors="*{name}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="email">email :</label>
+                        <label class="input-group-text body" for="email" th:text="#{c.t.th2}"></label>
                         <input type="text" class="form-control csIn" id="email"
                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}">
                         <small th:if="${#fields.hasErrors('email')}" class="invalid-feedback" th:errors="*{email}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="phone">phone :</label>
+                        <label class="input-group-text body" for="phone" th:text="#{c.t.th3}"></label>
                         <input type="text" class="form-control csIn" id="phone"
                                th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" th:field="*{phone}">
                         <small th:if="${#fields.hasErrors('phone')}" class="invalid-feedback" th:errors="*{phone}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="address">address:</label>
+                        <label class="input-group-text body" for="address" th:text="#{c.t.th4}"></label>
                         <input type="text" class="form-control csIn" id="address"
                                th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'" th:field="*{address}">
                         <small th:if="${#fields.hasErrors('address')}" class="invalid-feedback" th:errors="*{address}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="prague">prague :</label>
+                        <label class="input-group-text body" for="prague" th:text="#{c.t.th5}"></label>
                         <input type="number" class="form-control" min="1"  style="max-width: 50px" id="prague"
                                th:classappend="${#fields.hasErrors('prague')} ? 'is-invalid'" th:field="*{prague}">
                         <small th:if="${#fields.hasErrors('prague')}" class="invalid-feedback" th:errors="*{prague}"></small>
                     </div>
                     <div class="form-group input-group-prepend">
-                        <label class="input-group-text body" for="ccn">credit card number :</label>
+                        <label class="input-group-text body" for="ccn" th:text="#{c.t.th6}"></label>
                         <input type="text" class="form-control csIn" id="ccn"
                                th:classappend="${#fields.hasErrors('cardNumber')} ? 'is-invalid'" th:field="*{cardNumber}">
                         <small th:if="${#fields.hasErrors('cardNumber')}" class="invalid-feedback" th:errors="*{cardNumber}"></small>
@@ -60,23 +59,22 @@
             <div class="col-md-4 ml-auto mt-3">
                 <br>
                 <ul>
-                    <li><h4 class="lead mt-5">Next-day delivery is guaranteed</h4></li>
-                    <li><h4 class="lead mt-1">5% of subTotal is
-                        applied as delivery surcharge to all purchase orders</h4></li>
+                    <li><h4 class="lead mt-5" th:text="#{c.p3}"></h4></li>
+                    <li><h4 class="lead mt-1" th:text="#{c.p4}"></h4></li>
                 </ul>
                 <br>
                 <div class="csDiv">
                     <br>
-                    <p style="margin-left:200px;"><b>subtotal : </b>€
+                    <p style="margin-left:200px;"><b th:text="#{c.t.th7}"></b>€
                         <span th:text="${#numbers.formatDecimal(subTotal,0,2)}"></span>
                     </p>
-                    <p style="margin-left: 120px;"><b>delivery surcharge : </b>€
+                    <p style="margin-left: 120px;"><b th:text="#{c.t.th8}"></b>€
                         <span th:if="${deliCharge < 10 && subTotal >9}" style="margin-left: 20px;" th:text="${#numbers.formatDecimal(deliCharge,0,2)}"></span>
                         <span th:if="${deliCharge < 10 && subTotal <10}" style="margin-left: 13px;" th:text="${#numbers.formatDecimal(deliCharge,0,2)}"></span>
                         <span th:if="${deliCharge >=10}" style="margin-left: auto;" th:text="${#numbers.formatDecimal(deliCharge,0,2)}"></span>
                     </p>
                     <hr>
-                    <p style="margin-left: 225px;"><b>total : </b>€ <span
+                    <p style="margin-left: 225px;"><b th:text="#{c.t.th9}"></b>€ <span
                             th:text="${#numbers.formatDecimal(total,0,2)}"></span></p>
                     <br>
                 </div>
