@@ -18,7 +18,8 @@
             <br>
         </div>
         <div class="row">
-            <h4 class="lead ml-auto">subtotal : €<span th:text="${#numbers.formatDecimal(subTotal,0,2)}"></span></h4>
+            <h4 class="lead ml-auto" ><small style="font-size: medium;" th:text="#{c.t.th7}"></small> €
+                <span th:text="${#numbers.formatDecimal(subTotal,0,2)}"></span></h4>
             <br>
         </div>
         <div class="row">
@@ -34,7 +35,7 @@
                     </thead>
                     <tbody>
                     <div th:if="${well}" class="alert alert-danger" role="alert">
-                        <span>Cart is empty</span>
+                        <span th:text="#{alert.msg}"></span>
                     </div>
                     <form th:action="@{/cart/update}" th:object="${cartItem}" method="post">
                         <tr th:each="it : ${cartItems}">
